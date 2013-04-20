@@ -1,0 +1,189 @@
+body {
+	background-color: #003333;
+	text-align: center;
+}
+
+.cards {
+	text-align: center;
+}
+
+#pot {
+	text-align: center;
+	font-size: 100px;
+}
+
+img {
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    font-family: matryoshka;
+    font-size: 100px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+h2 {
+    text-align: center;
+    font-family: matryoshka;
+    font-size: 70px;
+    color: #666666;
+    font-weight: bold;
+}
+
+.deviceDiv {
+	text-align: center;
+	margin-top: 4%;
+	margin-bottom: 4%;
+	height: 100px;
+}
+
+#buttons {
+	height: 40px;
+	margin-left: 6%;
+	margin-right: 5%;
+	clear: both;
+}
+
+.buttons {
+	height: 50px;
+}
+
+button {
+	height: 100%;
+	width: 45%;
+	margin-bottom: 5%;
+}
+
+.splitScreen {
+	float: left;
+	width: 48%;
+}
+
+#for-play {
+	height: 95%;
+}
+
+#two-cards, #players-list, #five-cards{
+	text-align: center;
+	height: 70%;
+	margin-bottom: 400px;
+}
+
+.player {
+	width: 100%;
+	color: white;
+	background-color: purple;
+	margin: 1% 0;
+}
+
+.folded {
+	width: 100%;
+	color: black;
+	background-color: red;
+	margin: 1% 0;
+}
+
+#tableDiv {
+	position: relative;
+}
+
+body {
+	font-size: 200%;
+}
+
+#table {
+	width: 100%;/*
+	margin-bottom: -300px;*/
+}
+
+#backCards {
+	position: relative;
+}
+
+#dialog-message {
+	font-size: 30px;
+	width: 100%;
+}
+
+button {
+	width: 100%;
+}
+
+@font-face
+{
+font-family: matryoshka;
+src: url('matryoshka.ttf')
+}
+
+
+@media (max-width: 480px) {
+  /* Style adjustments for viewports 480px and over go here */
+	button {
+		height: 100%;
+		width: 100%;
+		margin-bottom: 5%;
+	}
+
+	h1 {
+	    font-size: 50px;
+	}
+	h2 {
+	    font-size: 40px;
+	}
+	body {
+		font-size: 150%;
+	}
+
+	#two-cards, #players-list, #five-cards{
+		margin-bottom: 300px;
+	}
+}
+
+@media (max-height: 480px) {
+  /* Style adjustments for viewports 480px and over go here */
+
+	#two-cards, #players-list, #five-cards{
+		margin-bottom: 300px;
+	}
+}
+
+@media (max-height: 720px) {
+  /* Style adjustments for viewports 480px and over go here */
+
+	#two-cards, #players-list, #five-cards{
+		margin-bottom: 400px;
+	}
+}
+
+@media (max-width: 1200px) {
+  /* Style adjustments for viewports up to 1200px */
+}
+
+/*@media (min-width: 700px) and (max-width: 1199px) {
+	header {
+		margin-left: 7%;
+	}
+	#index {
+		margin-left: 7%;
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+	header {
+		margin-left: 15%;
+	}
+	#index {
+		margin-left: 15%;
+	}
+}
+
+@media (min-width: 1600px) {
+	header {
+		margin-left: 20%;
+	}
+	#index {
+		margin-left: 20%;
+	}
+}*/

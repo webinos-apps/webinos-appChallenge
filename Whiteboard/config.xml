@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://webinos.org/jimker/whiteboard" version="0.7-alpha" height="768" width="1068">
+  <name short="Whiteboard">A webinos enabled whiteboard</name>
+  <description>Draw anything you like and share it in real time with your colleagues. This whiteboard is powered by webinos. Initially created for the first webinos cross-screen application contest.</description>
+  <content src="index.html" />
+  <icon src="images/icon.png" />
+  <author email="jim_k_3@yahoo.gr">Jim Keramidas</author>
+  <feature name="http://webinos.org/api/events" required = "false"/> 
+</widget>
+

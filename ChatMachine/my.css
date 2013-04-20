@@ -1,0 +1,22 @@
+#connectionStatus{
+    padding-top: 20px;
+    padding-left: 5px;
+    display: block;
+}
+
+.ui-field-contain label.ui-input-text,.ui-field-contain input.ui-input-text, .ui-field-contain textarea.ui-input-text, .ui-field-contain .ui-input-search {
+    display: block;
+    width: 100%
+}
+
+.msgContainerDiv
+{
+    overflow-y: scroll;
+    height: 300%
+}
+
+.mymessage{
+    font-style: italic;
+    font-weight: bold;
+    color: #272977;
+}

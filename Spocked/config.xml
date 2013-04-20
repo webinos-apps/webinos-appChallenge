@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.thinkit.gr/webinos-apps/rpsls" version="0.0.1" height="800" width="400">
+ 	<name>Spocked!</name>  
+  
+  	<description>A multiplayer game that makes use of the webinos app2app API</description>
+    
+  	<author email="svris@thinkit.gr">Spyros Vris</author>
+  	  
+  	<content src="index.html"/>  
+  	<icon src="rpsls.png"/>
+  	  
+</widget>

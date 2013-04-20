@@ -1,0 +1,102 @@
+<head>
+    <link rel="stylesheet" href="css/modern.css" type="text/css">
+    <link rel="stylesheet" href="css/original-style.css" type="text/css">
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="js/share_serialized_map.js" type="text/javascript"></script>
+    <script src="js/webinos.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <table>
+            <tr>
+                <td>Webinos Players</td>
+                <td>
+                    <button id="findService" class="button" style="width:120px">Playing with...</button>
+                    <br/>
+                    <select id="playersList" width="500" style="width: 500px; background-color:#505050; overflow:hidden; color:white" size="5"></select>
+                </td>
+            </tr>
+    </table>
+
+<div class="controls">
+    <a class="button play-button" href="#">Play</a>
+    <a class="button pause-button" href="#">Pause</a>
+    <a class="button stop-button" href="#">Stop</a>
+    BPM: <input type="text" class="button bpm-input"/>
+    <a class="button bpm-button" href="#">Set</a>
+</div>
+
+<div class="channels">
+</div>
+
+
+<script src="js/models.js"></script>
+<script src="js/views.js"></script>
+
+<script type="text/javascript">
+$(function() {
+
+    kick = new Channel(new Sample("http://www.daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/bass/bass6_5.wav"));
+
+    snare = new Channel(new Sample("http://www.daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/snare/rimsnare_12.wav"));
+
+    hat = new Channel(new Sample("http://daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/hihat/hihat_closed_1_5.wav"));
+
+
+/*
+    kick = new Channel(new Sample("samples/bass6_5.wav"));
+
+    snare = new Channel(new Sample("samples/rimsnare_12.wav"));
+
+    hat = new Channel(new Sample("samples/hihat_closed_1_5.wav"));
+*/
+
+
+    song = new Song();
+    song.addChannel('kick', kick);
+    song.addChannel('snare', snare);
+    song.addChannel('hat', hat);
+    song.setBPM(120);
+
+
+    $('.play-button').on('click', function(e) {
+        song.stop();
+        song.play();
+    });
+    $('.pause-button').on('click', function(e) {
+        song.pause();
+        updateView(song);
+    });
+    $('.stop-button').on('click', function(e) {
+        song.stop();
+        updateView(song);
+    });
+
+    $('.channels').on('click', '.bar', function(e) {
+        var channel = $(this).data('channel'); 
+        var pos = $(this).data('pos');
+        song.channels[channel].toggleBar(pos);
+
+        shareBeats.change(channel, pos, song.channels[channel].bars[pos]);
+
+        updateView(song);
+    });
+
+
+    $('.bpm-button').on('click', function () {
+        var bpm = $('.bpm-input').val();
+        song.setBPM(bpm);
+    });
+
+
+    updateView = function (song) {
+        $('.channels').html(new SongView(song).render());
+    };
+
+    updateView(song);
+    $('.bpm-input').val(song.bpm);
+
+});
+</script>
+</body>

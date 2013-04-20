@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://dimitris.kateros.gr/wordbattle" version="1.0" height="800" width="480"
+>
+  <!-- Name of the widget -->
+  <name short="Word Battle">Word Battle</name>
+  <!-- Description is shown when installing widget -->
+  <description>Challenge your friends in an epic Word Battle or play in single player mode to practice. Click host and wait for your friends to click the join button. Click "Start game" when at least one has joined and enjoy the battle. Visit the manual at http://tinyurl.com/wordbattle.</description>
+  <!-- Start page for widget -->
+  <content src="index.html" />
+  <!-- Default icon for widget -->
+  <icon src="icon.png" />
+  <!-- Widget author -->
+  <author href="http://tinyurl.com/wordbattle" email="d.kateros@hotmail.com">Dimitris Kateros</author>
+  <!-- Ask for webinos Event API, but it's not required -->
+  <feature name="http://webinos.org/api/events" required = "false"/> 
+  <!-- Distributed under the Apache 2.0 licence -->
+  <license href="http://www.apache.org/licenses/LICENSE-2.0.html">Distributed under the Apache 2.0 License.</license>
+
+</widget>
+

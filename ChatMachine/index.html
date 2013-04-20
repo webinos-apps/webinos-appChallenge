@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>ChatMachine!</title>
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" href="my.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        <script src="js/jquery.md5.js"></script>
+        <script src="js/webinosConnector.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/webinosLoader.js"></script>
+
+	</head>
+    <body>
+        <!-- Home -->
+        <div data-role="page" id="Main">
+            <div data-theme="d" id="mainheader" data-role="header">
+                <div class="ui-grid-b">
+                    <div class="ui-block-a">
+                        <label id="connectionStatus"></label>
+                    </div>
+                    <div class="ui-block-b">
+                        <h3>
+                            Chat Room
+                        </h3>
+                    </div>
+                    <div class="ui-block-c">
+                        <a data-role="button" href="#Options" class="ui-btn-right" style="margin-top: 10px;">
+                            Options
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div data-role="content">
+                <div id="incomingMessages" name="incomingMessages" class="msgContainerDiv" ></div>
+            </div>
+            <div data-theme="d" id="mainfooter" data-role="footer" data-position="fixed">
+                <div data-role="fieldcontain">
+                       		<table style="width:100%;">
+								<tr>
+                                    <td style="width: 75px;"><img src="images/anonymous.png" width="64" height="64" style="float: left;margin-left: 5px;" id="gravatarimage" alt="your image"/></td>
+									<td><input name="" id="textinput" placeholder="Enter Text..." value="" type="text" style="width:90%"></td>
+									<td><input value="Send" type="button" id="sendMessage"><td>
+								</tr>
+							</table>
+                </div>
+            </div>
+        </div>
+        <!-- Options -->
+        <div data-role="page" id="Options">
+            <div data-theme="d" data-role="header">
+                <a data-role="button" href="#Main" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    Options
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="nickname">
+                            Nickname
+                        </label>
+                        <input name="" id="nickname" placeholder="" value="" type="text" />
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="email">
+                            Gravatar email
+                        </label>
+                        <input name="" id="email" placeholder="" value="" type="text" />
+                    </fieldset>
+                </div>
+                <input type="submit" id="savesettings" value="Save settings" />
+            </div>
+        </div>
+    </body>
+</html>

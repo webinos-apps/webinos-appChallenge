@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://appchallenge.webinos.org/webinosprojector" version="1.0" height="800" width="480">
+  <!-- Name of the widget -->
+  <name short="webinos projector">A webinos enabled collaborative projector</name>
+  <!-- Description is shown when installing widget -->
+  <description>Turn any device into a projector screen and show your images,videos or even youtube videos from any other device you may have.</description>
+  <!-- Start page for widget -->
+  <content src="index.html" />
+  <!-- Default icon for widget -->
+  <icon src="icon.png" />
+  <!-- Widget author -->
+  <author href="http://tinyurl.com/webinos-projector" email="b.milonakis@gmail.com">Vassilis Milonakis</author>
+  <!-- Ask for webinos Event API, which is required, but widget rendered doesn't support it -->
+  <!-- <feature name="http://webinos.org/api/events" required = "true"/> -->
+  <!-- Ask for webinos File API, but it's not required -->
+  <feature name="http://webinos.org/api/file" required = "false"/> 
+  <!-- Distributed under the Apache 2.0 licence -->
+  <license href="http://www.apache.org/licenses/LICENSE-2.0.html">Distributed under the Apache 2.0 License.</license>
+</widget>

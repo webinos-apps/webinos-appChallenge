@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.istvank.eu/tiledmaps/webinos" version="1.0.1">
+  <!-- Name of the widget -->
+  <name>Multi-Screen Maps</name>
+  <!-- Description is shown when installing widget -->
+  <description>A tiled Google Maps viewer that splits maps over multiple screens.</description>
+  <!-- Start page for widget -->
+  <content src="index.html" />
+  <!-- Default icon for widget -->
+  <icon src="icon.png" />
+  <!-- Widget author -->
+  <author>Istvan Koren</author>
+</widget>

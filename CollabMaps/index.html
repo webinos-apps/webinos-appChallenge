@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Webinos Maps</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+        
+        <link rel="stylesheet" href="style/streetviewer.css">
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+        <!-- JQUERY -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>
+
+        <!-- GOOGLE MAPS -->
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+        <!-- WEBINOS -->
+        <script type="text/javascript" src="script/webinos-injector.js"></script>
+
+        <!-- APP -->
+        <script type="text/javascript" src="script/common.js"></script>
+        <script type="text/javascript" src="script/streetviewer.js"></script>
+    </head>
+    <body>
+        <div id="map_canvas" style="position:absolute;">
+        </div>
+        
+        <button id="btn_addmarker">
+        </button>
+        
+        <div id="dlg_login" class="hidden">
+            Please choose whether you want to connect as host or guest. Every session needs exactly one host.
+            <br>
+            If you receive an error "channel already exists", please reload the widget and enter an arbitrary number into this field.
+            <br>
+            <label>Channel#:</label>
+            <input type="text" id="txt_channelid">
+        </div>
+    </body>
+</html>

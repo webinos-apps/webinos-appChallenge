@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.gorgion.gr/chatmachine" version="1.0">
+  <name short="Chat machine">Chat machine!</name>
+  <description>A chat application to chat with your friends.</description>
+  <content src="index.html" />
+  <icon src="icon.png" />
+  <author email="gorgion@gmail.com">Giorgos Tsimpis</author>
+</widget>
+

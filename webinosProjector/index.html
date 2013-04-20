@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>webinos Projector</title>
+    <link rel="stylesheet" href="jquery/jquery.mobile-1.2.0.min.css"/>
+    <link rel="stylesheet" href="jquery/jquery.mobile.simpledialog.min.css"/>
+    <link rel="stylesheet" href="theme/projector-theme.css"/>
+    <script src="jquery/jquery.min.js"></script>
+    <script src="jquery/jquery.mobile-1.2.0.min.js"></script>
+    <script src="jquery/jquery.mobile.simpledialog2.min.js"></script>
+    <link rel="stylesheet" href="theme/custom.css"/>
+    <script src="main.js"></script>
+    <script src="googleApis.js"></script>
+    <script type="text/javascript">
+        function gload(){
+            Youtube.init();
+        }
+        // Ensure that we always start at home
+        document.location.hash = "#Home";
+        $(function () {
+            loadWebinosScript();
+            //When page is loaded
+            CoreApp.init(); // initialize application
+        });
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=gload"></script>
+
+</head>
+<body>
+<!-- Home -->
+<div data-role="page" id="Home" data-theme="a">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#Settings" data-icon="gear" data-iconpos="left" class="ui-btn-right">
+            Settings
+        </a>
+
+        <h3>
+            Select mode
+        </h3>
+    </div>
+    <div data-role="content">
+        <h2>Please select this device's (<span id="device-name"></span>) mode:</h2>
+        <a data-role="button" id="videoPlayer">
+            <h3>Projector</h3>
+
+            <p>Renders images and videos selected <br/>from the controllers</p>
+        </a>
+        <a data-role="button" href="#Controller-local">
+            <h3>Controller</h3>
+
+            <p>Allows you to search for an image or video<br/>and display it on the projector</p>
+        </a>
+    </div>
+</div>
+<!-- Settings -->
+<div data-role="page" id="Settings" data-theme="a">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#Home" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Back
+        </a>
+        <h3>
+            Settings
+        </h3>
+    </div>
+    <div data-role="content">
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup">
+                <label for="textinput-device-name">
+                    Device name
+                </label>
+                <input id="textinput-device-name" placeholder="" value="" type="text"/>
+            </fieldset>
+        </div>
+        <input type="button" id="cmdSaveSettings" value="Save settings"/>
+    </div>
+</div>
+<!-- Controller -->
+<div data-role="page" id="Controller-local">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#Home" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Back
+        </a>
+        <h3>
+            Controller
+        </h3>
+    </div>
+    <div data-role="content">
+        <label id="activePath">&nbsp;</label><br/>
+        <ul id="fileFs" data-role="listview"></ul>
+    </div>
+    <div data-role="footer" data-position="fixed" data-id="navigation">
+        <div data-role="navbar" data-iconpos="left">
+            <ul>
+                <li><a href="#Controller-local" data-icon="videostore-local" class="ui-btn-active ui-state-persist">Local</a></li>
+                <li><a href="#Controller-youtube" data-icon="videostore-youtube">Youtube</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- Youtube Controller -->
+<div data-role="page" id="Controller-youtube">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#Home" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Back
+        </a>
+        <h3>
+            Controller
+        </h3>
+    </div>
+    <div data-role="content">
+       <div>Search for youtube video:</div>
+       <input name="" id="searchYoutube" placeholder="" value="" type="search" />
+        <input type="submit" value="Search" id="cmdSearchYoutube" />
+        <ul data-role="listview" id="youtubeResults" data-inset="true">
+            <li data-role="list-divider" role="heading">
+                Youtube results
+            </li>
+            <li>Please search for something</li>
+        </ul>
+    </div>
+    <div data-role="footer" data-position="fixed" data-id="navigation">
+        <div data-role="navbar" data-iconpos="left">
+            <ul>
+                <li><a href="#Controller-local" data-icon="videostore-local">Local</a></li>
+                <li><a href="#Controller-youtube" data-icon="videostore-youtube" class="ui-btn-active ui-state-persist">Youtube</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

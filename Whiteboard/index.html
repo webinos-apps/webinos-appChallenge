@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <title>Whiteboard</title>
+    <link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css"/>
+    <link rel="stylesheet" type="text/css" href="js/jquery.farbtastic/farbtastic.css"/>
+
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.optimise.js"></script>
+    <script type="text/javascript" src="js/jquery.farbtastic/farbtastic.js"></script>
+
+    <script type="text/javascript" src="js/easeljs-0.5.0.min.js"></script>
+
+    <script type="text/javascript" src="js/webinosConnector.js"></script>
+    <script type="text/javascript" src="js/whiteboard.js"></script>
+    <script type="text/javascript" src="js/whiteboard.canvas.js"></script>
+
+    <script type="text/javascript">
+        document.location.hash = "#pgHome";
+
+        if (navigator.userAgent.indexOf("Android")!=-1 || typeof webinos=="undefined"){
+            var script = document.createElement( 'script' );
+            script.type = 'text/javascript';
+            script.src = 'js/webinos.js';
+            $("head").append( script );
+        }
+
+        var app = new whiteboard();
+        $(document).one('pageinit', function () {
+            console.log("Application Started");
+            app.init();
+        });
+
+    </script>
+    <style type="text/css">
+        .ui-mobile, .ui-mobile .ui-page{
+            min-height: 100px;
+        }
+        .ui-content {
+        }
+		#pgHome{
+			background: url('images/bgRepeat.png');
+		}
+		#pgHome .content-secondary{
+			background-color: #fff;
+		}
+		
+        #pgHome #logoHolder h1{
+            margin: 0px;
+        }
+        #pgHome #logoHolder p {
+            margin: .3em 0 0;
+            line-height: 1.3em;
+            font-size: .9em;
+            font-weight: bold;
+            color: #666;
+        }
+
+        #pgHome #intro {
+            margin: 1.5em 0;
+            line-height: 1.3em;
+            font-size: .96em;
+            border-top: 1px solid blue;
+            padding: 1.5em 15px 0;
+        }
+
+        #pgHome #logoHolder img {
+            max-width: 100%;
+        }
+        #pgHome #logoHolder{
+            text-align: center;
+        }
+
+        @media all and (min-width: 650px){
+            #pgHome .ui-content{
+                margin: 0px;
+                padding: 0px;
+            }
+
+            #pgHome .content-secondary {
+                width: 40%;
+                float: left;
+                margin: 20px 0px 0px 5%;
+            }
+
+            #pgHome .content-primary ul:first-child {
+                margin-top: 0;
+            }
+
+            #pgHome .content-primary {
+                float: right;
+                width: 45%;
+                margin: 20px 5% 0px 0px;
+            }
+        }
+
+        #pgCanvas #myCanvasContainer{
+            padding: 0px;
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+            display: block;
+            overflow: hidden;
+            background: url('images/bgRepeat.png');
+            text-align: center;
+            vertical-align: middle;
+        }
+        #pgCanvas #myCanvas{
+            -webkit-tap-highlight-color: transparent;
+            background-color: #FFF;
+        }
+        .showIfOnline{
+            display: none;
+        }
+
+        #picker{
+            text-align: center;
+            vertical-align: middle;
+            margin-top: 5px;
+        }
+
+        .farbtastic{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div data-role="page" id="pgHome">
+    <div data-role="content">
+        <div class="content-secondary">
+
+            <div id="logoHolder">
+                <h1><img src="images/Logo.png" alt=""/></h1>
+
+                <p>A webinos enabled whiteboard.</p>
+            </div>
+
+
+            <p id="intro">Draw anything you like and share it in real time with your colleagues. This whiteboard is powered by webinos. Initially created for the first webinos cross-screen application contest.</p>
+
+        </div>
+        <!--/content-primary-->
+
+        <div class="content-primary">
+            <nav>
+                <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+                    <li data-role="list-divider">Whiteboard</li>
+                    <li><a href="#pgCanvas">Draw alone</a></li>
+                    <li class="showIfOnline"><a href="#pgHost">Host a whiteboard</a></li>
+                    <li class="showIfOnline"><a href="#pgJoin">Join a whiteboard</a></li>
+                    <li class="showIfOffline"><span id="connectionStatus">Connecting...</span></li>
+                    <li data-role="list-divider">About</li>
+                    <li>Version: <span id="version">&nbsp</span></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="pgCanvas">
+    <div data-role="header">
+        <a href="#pgHome" data-icon="arrow-l">Exit</a>
+        <h1 id="canvasTitle">Drawing Alone</h1>
+        <a href="#pgPen" data-icon="gear">Pen</a>
+    </div>
+    <div data-role="content" id="myCanvasContainer">
+        <canvas id="myCanvas"></canvas>
+    </div>
+</div>
+<div data-role="page" id="pgPen">
+    <div data-role="header">
+        <a href="#pgCanvas" data-icon="arrow-l">Back</a>
+        <h1>Select you pen style</h1>
+    </div>
+    <div data-role="content">
+        <div data-role="fieldcontain">
+            <label for="thickness">Thickness:</label>
+            <input type="range" name="thickness" id="thickness" value="5" min="5" max="50" step="5" />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" value="#F00" readonly/>
+            <div id="picker"></div>
+        </div>
+    </div>
+</div>
+<div data-role="page" id="pgHost">
+    <div data-role="header">
+        <a href="#pgHome" data-icon="arrow-l">Back</a>
+        <h1>Host a whiteboard</h1>
+    </div>
+    <div data-role="content">
+        <div data-role="fieldcontain">
+            <label for="whiteboardName">Whiteboard name:</label>
+            <input type="text" name="whiteboardName" id="whiteboardName" value="" />
+        </div>
+        <div data-role="fieldcontain">
+            <a href="#" onclick="app.createRoom();return false;" data-role="button">Notify your webinos partners</a>
+        </div>
+    </div>
+</div>
+<div data-role="page" id="pgJoin">
+    <div data-role="header">
+        <a href="#pgHome" data-icon="arrow-l">Back</a>
+        <h1>Join a whiteboard</h1>
+    </div>
+    <div data-role="content">
+        <ul data-role="listview" id="roomList">
+            <li>Waiting whiteboards...</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

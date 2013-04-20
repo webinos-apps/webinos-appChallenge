@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="100%"
+   height="100%"
+   preserveAspectRatio="xMinYMin meet"
+   viewBox="0 0 960 560"
+   enable-background="new 0 0 960 560"
+   xml:space="preserve"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="PokerTable.svg"><metadata
+   id="metadata7009"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs7007"><filter
+     id="filter10026"
+     inkscape:label="Evanescent"
+     inkscape:menu="Blurs"
+     inkscape:menu-tooltip="Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
+     color-interpolation-filters="sRGB"><feGaussianBlur
+       id="feGaussianBlur10028"
+       result="result6"
+       stdDeviation="3"
+       in="SourceGraphic" /><feColorMatrix
+       id="feColorMatrix10030"
+       values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+       result="result7"
+       in="SourceGraphic" /><feComposite
+       id="feComposite10032"
+       in2="result7"
+       operator="in"
+       in="result6" /></filter><filter
+     id="filter11220"
+     inkscape:label="Warm inside"
+     inkscape:menu="Morphology"
+     inkscape:menu-tooltip="Blurred colorized contour, filled inside"
+     color-interpolation-filters="sRGB"><feColorMatrix
+       id="feColorMatrix11222"
+       values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+       result="fbSourceGraphic" /><feGaussianBlur
+       id="feGaussianBlur11224"
+       stdDeviation="3"
+       result="result1" /><feOffset
+       id="feOffset11226"
+       dx="2"
+       dy="2"
+       result="result6" /><feComposite
+       id="feComposite11228"
+       in2="result1"
+       k2="2"
+       operator="in"
+       result="result2"
+       in="result6" /><feColorMatrix
+       id="feColorMatrix11230"
+       values="110"
+       result="result3"
+       type="hueRotate" /><feBlend
+       id="feBlend11232"
+       in2="result3"
+       mode="screen"
+       in="result2"
+       result="result4" /><feConvolveMatrix
+       id="feConvolveMatrix11234"
+       order="3 3"
+       kernelMatrix="-2 0 2 0 4 0 2 0 2"
+       divisor="2"
+       bias="0"
+       targetX="0"
+       in="result4"
+       result="result5" /><feComposite
+       id="feComposite11236"
+       in2="result5"
+       operator="atop"
+       in="result2" /></filter></defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1366"
+   inkscape:window-height="706"
+   id="namedview7005"
+   showgrid="false"
+   inkscape:zoom="0.92321429"
+   inkscape:cx="474.93809"
+   inkscape:cy="280"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="g3" />
+<g
+   id="g3">
+	<g
+   id="g5"
+   style="filter:url(#filter11220)">
+		<path
+   fill="#333333"
+   stroke="#000000"
+   stroke-miterlimit="10"
+   d="M752.582,552.5c113.505,0,205.518-121.348,205.518-272.12    S866.087,8.5,752.582,8.5H207.418C93.914,8.5,1.9,129.608,1.9,280.38S93.914,552.5,207.418,552.5H752.582z"
+   id="path7" />
+	</g>
+	<g
+   id="g9"
+   style="filter:url(#filter10026)">
+		<path
+   stroke-miterlimit="10"
+   d="M720.312,505.5C820.38,505.5,901.5,405.343,901.5,280.901    C901.5,156.459,820.38,56.5,720.312,56.5H239.688C139.62,56.5,58.5,156.459,58.5,280.901c0,124.441,81.12,224.599,181.188,224.599    H720.312z"
+   id="path11"
+   stroke="#000000"
+   fill="#5DB779" />
+	</g>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</g>
+</svg>

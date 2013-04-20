@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://www.istvank.eu/tiledimage/webinos" version="1.0.1">
+  <!-- Name of the widget -->
+  <name>Tiled Image Viewer</name>
+  <!-- Description is shown when installing widget -->
+  <description>A tiled image viewer that splits an image to multiple screens.</description>
+  <!-- Start page for widget -->
+  <content src="index.html" />
+  <!-- Default icon for widget -->
+  <icon src="icon.png" />
+  <!-- Widget author -->
+  <author>Istvan Koren</author>
+</widget>

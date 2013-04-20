@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+		<meta charset="UTF-8">
+
+		<title>Tiled Surface</title>
+
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/channelmaps.css">
+		<link rel="stylesheet" href="css/jquery-ui-1.9.0.custom.css">
+
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.9.0.custom.min.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="js/jquery.ui.touch-punch.js"></script>
+
+		<script type="text/javascript" src="js/webinos.js"></script>
+		<script type="text/javascript" src="js/connector.webinos.js"></script>
+		<script type="text/javascript" src="js/tiledsurface.js"></script>
+		
+		<!-- Channels -->
+		<script type="text/javascript" src="js/channelmaps.js"></script>
+
+		<script type="text/javascript">
+			/**
+			 * Gets called after the document has finished loading.
+			 */
+			$(document).ready(function() {
+				tiledSurface.initialize();
+				tiledSurface.setState(tiledSurface.Status.LOGIN);
+
+				//$("#logout").button().click(tiledSurface.disconnect);
+				//$("#reset").button().click(tiledSurface.resetConfiguration);
+				$("#start").button().click(tiledSurface.startContent);
+				$("#reconfig").button().click(tiledSurface.reconfig);
+
+				$("#toolbar").position({
+					"my" : "center center",
+					"at" : "center center",
+					"of" : $("#container")
+				});
+				
+				// initialize channel
+				channelMaps.initialize();
+
+    			$("#toolbar_channel").position({
+        			"my" : "left top",
+        			"at" : "left top",
+        			"of" : $("body")
+    			});
+			});
+
+		</script>
+	</head
+	<body>
+		<div id="container">
+			<canvas id="pairing_canvas" class="content hidden">
+				Sorry, your browser does not support HTML5 canvas.
+			</canvas>
+
+			<!-- The channel of the tile -->
+			<div id="tile_content" class="content hidden">
+				<div id="map_canvas" style="position:absolute;">
+				</div>
+			</div>
+		</div>
+
+		<div style="position:absolute;height:0px;">
+			<span id="toolbar" class="ui-widget-content ui-corner-all">
+				<!--<button id="logout">
+					Logout
+				</button>
+				<button id="reset">
+					reset configuration
+				</button>-->
+				<button id="start">
+					Start Maps
+				</button>
+				<button id="reconfig">
+					Link Devices
+				</button>
+			</span>
+			
+			<span id="toolbar_channel" class="ui-widget-content ui-corner-all hidden">
+            </span>
+		</div>
+
+		<!-- login dialog -->
+		<div id="login_dialog" class="hidden">
+		</div>
+	</body>
+</html>

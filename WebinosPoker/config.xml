@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns       = "http://www.w3.org/ns/widgets"
+        id          = "http://romanos.tsouroplis.gr/games/poker"
+        version     = "0.5"
+        height      = "768"
+        width       = "1024"
+        >
+ 
+  <name short="Poker">
+   Webinos Poker
+  </name>
+
+  <description>This is the Webinos version of the Poker. Enjoy yourselves.
+  </description>
+
+  <author email="rom-dim@hotmail.com">Romanos Tsouroplis</author>
+
+  <icon src="game_station.png" />
+
+  <content type="text/html" src="main.html"/>
+</widget>

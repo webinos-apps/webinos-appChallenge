@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns       = "http://www.w3.org/ns/widgets"
+        id          = "http://webinos.org/appchallenge/webinos-beats"
+        version     = "0.2"
+        height      = "800"
+        width       = "480"
+        viewmodes   = "fullscreen">        
+        
+  <name short="Webinos BEATS">
+      Webinos BEATS
+  </name>    
+
+  <description>
+      Webinos BEATS is a collaborative drum machine. It allows you to use webinos end-to-end communication to create a tune using different webinos-enabled devices.
+  </description>
+
+  <author email="lorenzo.cafforio@gmail.com">Lorenzo Cafforio</author>
+   
+  <content src="index.html"/>
+  
+  <icon src="drum.png"/>
+  
+  <feature name="http://webinos.org/api/events" required = "false"/>  
+  
+  <license href="http://www.apache.org/licenses/LICENSE-2.0.html">Distributed under the Apache 2.0 License.</license>
+  
+</widget>

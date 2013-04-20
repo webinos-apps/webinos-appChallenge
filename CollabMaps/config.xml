@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://apps.istvank.eu/webinos_maps" version="0.0.2">
+  <name>CollabMaps</name>
+   <description>A very simple webinos Google Maps collaborative editor.</description>
+   <author email="mail@istvank.eu">Istvan Koren</author>
+   <content src="index.html"/>
+   <icon src="icon.jpg"/>
+</widget>

@@ -1,0 +1,25 @@
+/*
+ Custom css throughout the project
+*/
+
+.ui-simpledialog-container > p{
+    margin-left: 10px;
+}
+
+.ui-icon-videostore-local {
+    background: url("images/HardDisk.png") 50% 50% no-repeat; background-size: 24px 22px; ;
+}
+.ui-icon-videostore-youtube {
+    background: url("images/Youtube.png") 50% 50% no-repeat; background-size: 24px 22px; ;
+}
+
+#activePath{
+    display: block;
+    clear: both;
+}
+
+.youtubeResultVideo label{
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+}

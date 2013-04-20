@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>Rock Paper Scissors Lizard Spock!</title>
+	<link rel="stylesheet" href="jQuery/flexslider/flexslider.css" type="text/css">
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<script src="jQuery/flexslider/jquery.flexslider.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		
+		// Global variables
+		var activePlayers = 0;
+		var gameResult = 0;
+		// local variable to store the app2app service
+		var webinosApp2App = null;
+		// app2app communications channel
+		var myChannel = null;
+		// channel namespace
+		var channelNamespace = "urn:svris:rpsls";
+		
+		
+		// Keep track of the connected peers
+		var players = {};
+		
+		var listeningStatus = 0;
+		
+		// Create new settings object with desired properties
+		rpsls = {
+			name:''
+		};
+
+		// Extend object with values from localStorage (if a save exists)
+		if (localStorage["rpsls_save"] != null){
+			$.extend(rpsls, JSON.parse(localStorage["rpsls_save"]));
+		};
+		
+		// Save settings object to localStorage (create save file)
+		rpsls.save = function(){
+			localStorage["rpsls_save"] = JSON.stringify(rpsls);
+		};
+		
+		// player object for "you"
+		you = {
+			score: 0,
+			tempSelection: 0,
+			selection: 0,
+			ready: false
+		};
+		
+		// player object for "opponent"
+		opp = {
+			name: '',
+			score: 0,
+			peerId : null,
+			tempSelection: 0,
+			selection: 0,
+			ready: false
+		};
+						
+		// Make temporary selection
+		function makeSelection(i){
+			you.tempSelection = i;
+		};
+		
+		// Finalize selection 
+		function finalizeSelection(){
+			you.selection = you.tempSelection;
+			you.ready = true;
+			Say.MyMove();
+			
+			$('#waitingForOpp').show();
+			$('.waitingForYou').hide();
+			checkResult();
+		};
+		
+		//	oppFinalizeSelection (take data from opponent and if i have chosen then evaluate outcome
+		
+		// And the winner is...
+		function andTheWinnerIs(yourSelection, oppSelection){
+			switch(yourSelection)
+			{
+			case 1:
+				switch(oppSelection)
+				{
+				case 1:
+					return('You both selected rock. It is a tie!');
+					break;
+				case 2:
+					++opp.score;
+					return('Your opponents paper covers your rock. You lose! Aaawwww...');
+					break;
+				case 3:
+					++you.score;
+					return('Your rock crushes your opponents scissors. You win! Hurray!');
+					break;
+				case 4:
+					++you.score;
+					return('Your rock crushes your opponents lizard. You win! Hurray!');
+					break;
+				case 5:
+					++opp.score;
+					return('Your opponents Spock vaporizes your rock. You lose! Aaawwww...');
+					break;
+				default:
+					return('Unexpected error! (error code: 0x8007235623)');
+				};
+			case 2:
+				switch(oppSelection)
+				{
+				case 1:
+					++you.score;
+					return('Your paper covers your opponents rock. You win! Hurray!');
+					break;
+				case 2:
+					return('You both selected paper. It is a tie!');
+					break;
+				case 3:
+					++opp.score;
+					return('Your opponents scissors cut your paper. You lose! Aaawwww...');
+					break;
+				case 4:
+					++opp.score;
+					return('Your opponents lizard eats your paper. You lose! Aaawwww...');
+					break;
+				case 5:
+					++you.score;
+					return('Your paper disproves your opponents Spock. You win! Hurray!');
+					break;
+				default:
+					return('Unexpected error! (error code: 0x8007235623)');
+				};
+			case 3:
+				switch(oppSelection)
+				{
+				case 1:
+					++opp.score;
+					return('Your opponents rock crushes your scissors. You lose! Aaawww...!');
+					break;
+				case 2:
+					++you.score;
+					return('Your scissors cut your opponents paper. You win! Hurray!');
+					break;
+				case 3:
+					return('You both selected scissors. It is a tie!');
+					break;
+				case 4:
+					++you.score;
+					return('Your scissors decapitate you opponents lizard. A bloody mess... You win! Hurray!');
+					break;
+				case 5:
+					++opp.score;
+					return('Your opponents Spock smashes your scissors. You lose! Aaawww!');
+					break;
+				default:
+					return('Unexpected error! (error code: 0x8007235623)');
+				};
+			case 4:
+				switch(oppSelection)
+				{
+				case 1:
+					++opp.score;
+					return('Your opponents rock crushes your lizard. You lose! Aaawww...!');
+					break;
+				case 2:
+					++you.score;
+					return('Your lizard eats your opponents paper. You win! Hurray!');
+					break;
+				case 3:
+					++opp.score;
+					return('Your opponents scissors decapitate your lizard. A bloody mess... You lose! Aaawww...');
+					break;
+				case 4:
+					return('You both selected lizard. It is a tie!');
+					break;
+				case 5:
+					++you.score;
+					return('Your lizard poisons your opponents Spock. Die and do not prosper. You win! Hurray!');
+					break;
+				default:
+					return('Unexpected error! (error code: 0x8007235623)');
+				};
+			case 5:
+				switch(oppSelection)
+				{
+				case 1:
+					++you.score;
+					return('Your Spock vaporises your opponents rock. You win! Hurray!');
+					break;
+				case 2:
+					++opp.score;
+					return('Your opponents paper disproves your Spock. You lose! Aaawww!');
+					break;
+				case 3:
+					++you.score;
+					return('Your Spock smashes your opponents scissors. You win! Hurray...');
+					break;
+				case 4:
+					++opp.score;
+					return('Your opponents lizard poisons your Spock. Die and do not prosper. You lose! Aaawww!');
+					break;
+				case 5:
+					return('Spock vs. Spock! It is a tie!');
+					break;
+				default:
+					return('Unexpected error! (error code: 0x8007235623)');
+				};
+			default:
+				return('Unexpected error! (error code: 0x8007235623)');
+			};
+		};
+		
+		// calculate result if both players are ready
+		function checkResult(){
+			if (you.ready == true && opp.ready == true) {
+				you.ready = false;
+				opp.ready = false;
+				var rndNum = Math.floor((Math.random() * 5) + 1);
+				var subElement = andTheWinnerIs(you.selection, opp.selection);
+
+				var element = '<p>'+subElement+'</p>';
+				$('#playLog').html(element);
+				$('#waitingForOpp').hide();
+				$('.waitingForYou').show();
+				element='<p>'+ rpsls.name +': '+ you.score +'<br>'+ opp.name +': '+ opp.score + '</p>';
+				$('#scoreTrack').html(element);
+				for (i=1; i<6; i++){
+					$('#rpslsSelect' + i).removeClass('ui-btn-active');
+				};
+                $("#showResult").click();
+				showPlayImage(rndNum);
+			};
+		};
+		
+		// Function that formats the Game Lobby screen depending on player availability
+		function formatGameLobby(){
+			$("input[type='radio']").checkboxradio("refresh");
+			if (activePlayers == 0) {
+				$('.someActivePlayers').hide();
+				$('.noActivePlayers').show();
+			} else {
+				$('.noActivePlayers').hide();
+				$('.someActivePlayers').show();
+			};
+		};
+
+		// Set the active button and proper image, also calculate selection-id (1-5)
+		function showPlayImage(i) {
+			$('#rpslsSelect' + i).addClass('ui-btn-active');
+			$('#playImage').attr("src", "images/trans" + i + ".gif");
+			makeSelection(i);
+		};
+		
+		String.prototype.hashCode = function(){
+			var hash = 0;
+			if (this.length == 0) return hash;
+			for (i = 0; i < this.length; i++) {
+				char = this.charCodeAt(i);
+				hash = ((hash<<5)-hash)+char;
+				hash = hash & hash; // Convert to 32bit integer
+			}
+			return hash;
+		};
+			
+		// Things that run after window is loaded
+		$(window).load(function() {
+			// flexslider function parameters @ http://www.woothemes.com/flexslider/
+			$('.flexslider').flexslider({animation: "fade", slideshowSpeed: 1500, controlNav: false, directionNav: false});	
+			
+			
+			$("#destroyChannel").click(function(){ // Destroy channel or otherwise you have to restart pzh!
+				myChannel.disconnect();
+				myChannel = undefined;
+				alert('Channel disconnected!');
+			});
+			
+			// Load old name in name edit window
+			$('#options').on("pageshow", function() {
+				$('#options_name').val(rpsls.name);
+			});
+			
+			// Enter name in options page
+			$('#options_accept').click(function() {
+				rpsls.name = $('#options_name').val();
+				if (rpsls.name == null || rpsls.name == "") {
+                    $("#errorMessage").html("Name is required");
+					$("#pleaseSelectNameOptions").click();
+				} else {
+					rpsls.save();
+					$.mobile.changePage('#main')
+				}
+			});
+			
+			// stop listening to channel when on main screen and say "bye" to everyone that is listening
+			$('#main').on("pageshow", function() {
+				listeningStatus = 0;
+				Say.Bye();
+			});
+			
+			// Format gameLobby each time the page is loaded, also reset scores
+			$('#gameLobby').on("pageshow", function() {
+				$("#playerList > .ui-radio").remove();
+				Say.Bye();
+				activePlayers = 0;
+				you.score = 0;
+				opp.score = 0;
+				players = {};
+				formatGameLobby();
+				// start listening all users
+				listeningStatus = 1;
+				// say hello to everybody that is listening
+				Say.Hello();
+			});
+			
+			// When play button is pressed check to see if you have entered a name first
+			$('#playButton').click(function() {
+				if (rpsls.name == null || rpsls.name == "") {
+                    $("#errorMessage").html("Use the options page to enter a player name first.");
+                    $("#pleaseSelectName").click();
+					//$.mobile.changePage('#main');
+				} else {
+					$.mobile.changePage('#gameLobby');
+				};
+			});
+			
+			// Things to do when "Challenge" button is clicked
+			$('#challenge').click(function() {
+				var oppId = $("input:radio[name='opponents']:checked").val();
+				if (oppId){
+					Say.Challenge(oppId);
+					$("#challenge-popup").click(); // Show waiting
+				}else {
+                    $("#errorMessage").html("Please select an opponent first!");
+                    $("#pleaseOpponentFirst").click();
+				}
+			});
+			
+			// what to do if you say accept to a challenge
+			$('#AcceptChallengeBtn').click(function() {
+				Say.Glove(true, opp.peerId);
+				$.mobile.changePage('#play');
+			});
+			
+			// what to do when you say reject to a challenge
+			$('#RejectChallengeBtn').click(function() {
+				Say.Glove(false, opp.peerId);
+				$('.ui-dialog').dialog('close');
+			});
+			
+			// Each time play screen loads all navbar buttons clear active state (if any), game variables are reset and a random selection is chosen
+			$('#play').on("pageshow", function() {
+				// start listening only one user (opponent)
+				listeningStatus = 2;
+				//declare that you are in a game
+				Say.InGame();
+				var element = "";
+				$('#playLog').html(element);
+				element='<p>'+ rpsls.name +': '+ you.score +'<br>'+ opp.name +': '+ opp.score + '</p>';
+				var rndNum = Math.floor((Math.random() * 5) + 1);
+				you.ready = false;
+				opp.ready = false;
+				$('#scoreTrack').html(element);
+				$('#waitingForOpp').hide();
+				$('.waitingForYou').show();
+				for (i=1; i<6; i++){
+					$('#rpslsSelect' + i).removeClass('ui-btn-active');
+				};
+				showPlayImage(rndNum);
+			});
+		
+			// When you click on playImage, your selection is finalized.
+			$('#playImage').click(function(){finalizeSelection();});
+			
+			// When a button is selected on play screen, the appropriate image appears
+			$('#rpslsSelect1').click(function(){showPlayImage(1)});
+			$('#rpslsSelect2').click(function(){showPlayImage(2)});
+			$('#rpslsSelect3').click(function(){showPlayImage(3)});
+			$('#rpslsSelect4').click(function(){showPlayImage(4)});
+			$('#rpslsSelect5').click(function(){showPlayImage(5)});
+		});
+		
+		// Function called by webinos when a user joins the Game Lobby
+		function addUser(id, name){
+			var element='<input id="radio-'+ id.hashCode() +'" name="opponents" value="'+ id +'" type="radio"/><label id="label-'+ id.hashCode() +'" for="radio-'+ id.hashCode() +'">'+ name +'</label>';
+			$('#playerList').append(element).trigger('create');
+			++activePlayers;
+			formatGameLobby();
+		};
+		// Function called by webinos when a user leaves the Game Lobby
+		function removeUser(id){
+			$('#label-'+ id.hashCode()).remove();
+			$('#radio-'+ id.hashCode()).remove();
+			--activePlayers;
+			formatGameLobby();
+		};
+		
+		//webinos app2app
+		
+		// create channel
+		function createChannel() {
+			var config = {namespace: channelNamespace, properties: {mode:"send-receive"}, appInfo: {}};
+			webinosApp2App.createChannel(
+                    config,
+                    // callback invoked when a client want to connect to the channel
+                    function(request) {
+                        // we allow all clients to connect
+                        return true;
+                    },
+					// callback invoked to receive messages
+                    function(message) {
+                        console.log("The host received a message: " + message.contents);
+						handleMessage(message);
+                    },
+                    // callback invoked on success, with the client's channel proxy as parameter
+                    function(channel) {
+                        myChannel = channel;
+                    },
+                    function(error) {
+                        if (!myChannel) {
+                            console.log("Could not create channel: " + error.message);
+							// if channel creation fails, we assume the channel already exists and try to find it
+							searchForChannel();
+                        }
+                    }
+            );
+		};
+		
+		// search for channel
+		function searchForChannel() {
+			webinosApp2App.searchForChannels(
+				channelNamespace,
+                    // for now no other zones need to be searched, only its own personal zone
+                    [],
+                    // callback invoked on each channel found, we expect it to be called at most once
+                    // because we did not use a wildcard
+                    function(channel) {
+                        // we can include application-specific information to the connect request
+                        var requestInfo = {};
+                        channel.connect(
+                            requestInfo,
+                            // callback invoked to receive messages, only after successful connect
+                            function(message) {
+                                console.log("guest received message from host: " + message.contents);
+                                handleMessage(message);
+                            },
+                            // callback invoked when the client is successfully connected (i.e. authorized by the creator)
+                            function(success) {
+                                // make the proxy available now that we are successfully connected
+                               myChannel = channel;
+                            },
+                            function(error) {
+                                if (!myChannel) {
+                                    console.log("Could not connect to channel: " + error.message);
+                                }
+                            }
+                        );
+                    },
+                    // callback invoked when the search query is accepted for processing
+                    function(success) {
+                        // ok, but no action needed for now
+                    },
+                    function(error) {
+                        //alert("Could not search for channel: " + error.message);
+                    }
+            );
+		};
+		
+		function handleMessage(message){
+			console.log(message);
+			if (listeningStatus == 0){
+				console.log("I am deaf");
+				return;
+			}
+			if (message && message.contents && message.contents.header){
+				switch(message.contents.header){
+					case "hello": // User received a hello
+						if (listeningStatus == 1){
+							// if we don't know the player respond
+							if (!players[message.from.peerId]){
+								players[message.from.peerId] = message.from;
+								Say.Hello(message.from.peerId);
+								// Update GUI
+								addUser(message.from.peerId, message.contents.body);
+							}
+						}
+						break;
+					case "bye":
+						if (listeningStatus == 1){
+							// if we know the player remove him
+							if (players[message.from.peerId]){
+								delete players[message.from.peerId];
+								// Update GUI
+								removeUser(message.from.peerId);
+							}
+						} else if (listeningStatus == 2){
+							$.mobile.changePage('#gameLobby');
+						}
+						break;
+						case "ingame":
+						if (listeningStatus == 1){
+							// if we know the player and he is not our current opponent remove him
+							if (opp.peerId != message.from.peerId){
+								if (players[message.from.peerId]){
+									delete players[message.from.peerId];
+									// Update GUI
+									removeUser(message.from.peerId);
+								}
+							}
+						}
+						break;
+					case "challenge":
+						if (listeningStatus == 1){
+							opp.peerId = message.from.peerId;
+							opp.name = message.contents.body;
+							// Prompt user to accept challenge
+							$("#challengerName").html(message.contents.body);
+							// show dialog
+							$("#respondTochallenge").click();
+						}
+						break;
+					case "glove":
+					     // if accepted store the id to opp.peerId
+						 if (message.contents.body.response){
+							opp.peerId = message.from.peerId;
+							opp.name = message.contents.body.name;
+							// START GAME
+							$.mobile.changePage('#play');
+						 } else {
+							// STOP WAITING RESPONSE
+							$('.ui-dialog').dialog('close');
+						 }
+						break;
+					case "myMove":
+						opp.selection = message.contents.body
+						opp.ready = true;
+						checkResult();
+						break;
+					default:
+						console.log("Unrecognized message");
+						break;
+				}
+			}else{
+				console.log("Unrecognized message");
+			}
+		};
+
+		Say = { 
+			Hello: function(playerId){
+				if (playerId)
+					sendMessage( { header: "hello", body: rpsls.name }, players[playerId] );
+				else
+					sendMessage( { header: "hello", body: rpsls.name });
+			},
+			Bye: function(){
+				sendMessage( { header: "bye" });
+			},
+			InGame: function(){
+				sendMessage( { header: "ingame" });
+			},
+			Challenge: function(playerId){
+				opp.peerId = playerId;
+				sendMessage( { header: "challenge", body: rpsls.name }, players[playerId]);
+			},
+			Glove: function(accept, playerId){
+				sendMessage( { header: "glove", body: { response: accept, name: rpsls.name} } , players[playerId]);
+			},
+			MyMove: function(){
+				sendMessage( { header: "myMove", body: you.selection } , players[opp.peerId]);
+			}
+		};
+		
+		function sendMessage() {
+			if (arguments.length == 1 && myChannel && myChannel.send) {
+				myChannel.send(arguments[0]);
+			} else if (arguments.length == 2 && myChannel && myChannel.sendTo) {
+				myChannel.sendTo(arguments[1], arguments[0]);
+			} else {
+				console.log('No channel present. Not sending messsage <' + arguments + '>');
+			}
+		};
+
+        var head = document.getElementsByTagName("head")[0];
+        function AddScript(src, fnc) {
+            var oScript = document.createElement('script');
+            oScript.type = 'text/javascript';
+            oScript.src = src;
+            // most browsers
+            oScript.onload = fnc;
+            // IE 6 & 7
+            oScript.onreadystatechange = function () {
+                if (this.readyState == 'complete') {
+                    fnc();
+                }
+            }
+            head.appendChild(oScript);
+        }
+
+        function initWebinos() {
+            if (window.WebSocket || window.MozWebSocket) {
+                console.log("==============================\nNative websocket found.\n==============================");
+                AddScript("./webinos.js", pageLaunch);
+            }
+            else {
+                if (typeof WebinosSocket == 'undefined') {
+                    console.log("==============================\nWebinosSocket is undefined!\n==============================");
+                    setTimeout(initWebinos, 1);
+                }
+                else {
+                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nWebinosSocket is defined!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    AddScript("./webinos.js", pageLaunch);
+                }
+            }
+        }
+
+        function pageLaunch() {
+            webinos.discovery.findServices(new ServiceType("http://webinos.org/api/app2app"), {
+                onFound:function (service) {
+                    // If this is the local pzh
+                    if (service.serviceAddress == webinos.session.getPZHId())
+                        service.bindService({
+                            onBind:function () {
+                                webinosApp2App = service;
+                                createChannel();
+                            }
+                        });
+                }, onError:function (error) {
+                    console.log("Error: " + error.message + " (Code: #" + error.code + ")");
+                }
+            });
+        };
+
+		
+		$(window).load(function(){
+			initWebinos();
+		});
+	</script>
+  </head>
+  <body>
+     <!-- Main -->
+        <div data-role="page" id="main">
+            <div data-theme="a" data-role="header">
+                <h3 id="destroyChannel">
+                    Spocked!
+                </h3>
+            </div>
+			<div data-role="content">
+				<div class="flexslider">
+					<ul class="slides">
+						<li><img src="images/rock.jpg" /></li>
+						<li><img src="images/paper.jpg" /></li>
+						<li><img src="images/scissors.jpg" /></li>
+						<li><img src="images/lizard.jpg" /></li>
+						<li><img src="images/spock.jpg" /></li>
+					</ul>
+				</div>
+				<a data-role="button" id="playButton" href="">	<!-- Does not have 'href' on purpose. We check for player name -->
+                    Play!										<!-- before redirecting to #gameLobby -->
+                </a>
+                <a data-role="button" href="#options">
+                    Options
+                </a>
+                <a data-role="button" href="#rules">
+                    Rules
+                </a>
+                <a data-role="button" href="#about">
+                    About
+                </a>
+                <a data-rel="dialog" data-role="button" href="#errorDialog" style="display:none" id="pleaseSelectName"></a>
+            </div>
+        </div>
+     <!-- pleaseEnterNamePage -->
+     <div data-role="page" id="errorDialog">
+         <div data-role="content">
+             <div style="text-align:center;">
+                 <p id="errorMessage">Please enter a name</p>
+                 <a href="#"  data-role="button" data-rel="back">Ok</a>
+             </div>
+         </div>
+     </div>
+	<!-- Game Lobby -->
+        <div data-role="page" id="gameLobby">
+            <div data-theme="a" data-role="header">
+                <a data-role="button" href="#main" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    Game Lobby
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain" style="border-bottom-style: none">
+                    <div class="noActivePlayers" style="text-align:center;">
+						<p>No players available! Please wait...</p>
+						<img src="images/pleasewait.gif"/>
+					</div>
+					<div class="someActivePlayers" style="text-align:center;">
+						<fieldset id="playerList" data-role="controlgroup" data-type="vertical">
+							<legend>
+								Select player to challenge!
+							</legend>
+						</fieldset>
+					</div>
+				</div>
+                <div class="someActivePlayers">
+					<input type="button" value="Challenge!" id="challenge"/>
+					<a data-rel="dialog" data-role="button" href="#errorDialog" style="display:none" id="pleaseOpponentFirst"></a>
+					<a data-rel="dialog" data-role="button" href="#WaitingResponse" style="display:none" id="challenge-popup"></a>
+					<a data-rel="dialog" data-role="button" href="#RespondToChallengePage" style="display:none" id="respondTochallenge"></a>
+				</div>	
+            </div>
+        </div>
+	<!-- Waiting response  -->
+		<div data-role="page" id="WaitingResponse">
+			<div data-role="content">
+				<div style="text-align:center;">
+						<p>Waiting for your opponent to respond...</p>
+						<img src="images/pleasewait.gif"/>
+				</div>
+			</div>
+		</div>
+	<!-- Respond to challenge  -->
+		<div data-role="page" id="RespondToChallengePage">
+			<div data-role="content">
+				<div style="text-align:center;">
+						<p><span id="challengerName"></span> has challenged you. </p>
+						<input type="button" value="Accept" id="AcceptChallengeBtn"/>
+						<input type="button" value="Deny" id="RejectChallengeBtn"/>
+				</div>
+			</div>
+		</div>
+     <!-- Result -->
+     <div data-role="page" id="Result">
+         <div data-role="content">
+             <div style="text-align:center;">
+                 <p id="playLog">Result</p>
+                 <a href="#"  data-role="button" data-rel="back">Ok</a>
+             </div>
+         </div>
+     </div>
+
+
+	<!-- Play -->
+		<div data-role="page" id="play">
+			<div data-theme="a" data-role="header">
+				<a data-role="button" href="#main" data-icon="arrow-u" data-iconpos="left"	class="ui-btn-left">
+					Exit
+				</a>
+				<a data-role="button" href="#gameLobby" data-icon="arrow-l" data-iconpos="left"	class="ui-btn-right">
+					Lobby
+				</a>
+				<h3>
+					Play!
+				</h3>
+			</div>
+			<div data-role="content">
+				<div id="scoreTrack" style="text-align:center;">
+				</div>
+				<div id="waitingForOpp" style="text-align:center;">
+						<p>Waiting for your opponent to choose...</p>
+						<img src="images/pleasewait.gif"/>
+				</div>
+				<div class="waitingForYou" style="text-align:center;">
+					<img id="playImage" src="" style="max-width: 100%; max-height: 100%;"/> 
+				</div>
+				<div class="waitingForYou" style="text-align:center;">
+					<p>Tap / click image to finalize selection!</p>
+				</div>
+                <a data-rel="dialog" data-role="button" href="#Result" style="display:none" id="showResult"></a>
+			</div>
+			<div data-theme="a" data-role="footer" data-position="fixed">
+				<div class="waitingForYou" data-role="navbar" data-iconpos="top">
+					<ul>
+						<li>
+							<a id="rpslsSelect1" href="" data-transition="fade" data-theme="" data-icon="arrow-u">
+								Rock
+							</a>
+						</li>
+						<li>
+							<a id="rpslsSelect2" href="" data-transition="fade" data-theme="" data-icon="arrow-u">
+								Paper
+							</a>
+						</li>
+						<li>
+							<a id="rpslsSelect3" href="" data-transition="fade" data-theme="" data-icon="arrow-u">
+								Scissors
+							</a>
+						</li>
+						<li>
+							<a id="rpslsSelect4" href="" data-transition="fade" data-theme="" data-icon="arrow-u">
+								Lizard
+							</a>
+						</li>
+						<li>
+							<a id="rpslsSelect5" href="" data-transition="fade" data-theme="" data-icon="arrow-u">
+								Spock
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>		
+	 <!-- Options -->
+        <div data-role="page" id="options">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Options
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="options_name">
+                            Name
+                        </label>
+                        <input name="" id="options_name" placeholder="Type your name" value="" type="text" />
+                    </fieldset>
+                </div>
+                <input type="submit" id="options_accept" value="Accept" />
+                <a data-role="button" href="#main">
+                    Cancel
+                </a>
+                <a data-rel="dialog" data-role="button" href="#errorDialog" style="display:none" id="pleaseSelectNameOptions"></a>
+            </div>
+        </div>
+	<!-- Rules -->
+        <div data-role="page" id="rules">
+            <div data-theme="a" data-role="header">
+                <a data-role="button" href="#main" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    Rules
+                </h3>
+            </div>
+            <div data-role="content">
+				<p>Scissors cuts Paper</p>
+				<p>Paper covers Rock</p>
+				<p>Rock crushes Lizard</p>
+				<p>Lizard poisons Spock</p>
+				<p>Spock smashes Scissors</p>
+				<p>Scissors decapitates Lizard</p> 
+				<p>Lizard eats Paper</p>
+				<p>Paper disproves Spock</p>
+				<p>Spock vaporizes Rock</p>
+				<p>and, as it always has, Rock crushes Scissors!</p>
+				<iframe style="display: block; margin: 0 auto;" width="200" height="150" src="http://www.youtube.com/embed/iapcKVn7DdY?rel=0" frameborder="0"></iframe>
+            </div>
+        </div>
+	<!-- About -->
+        <div data-role="page" id="about">
+            <div data-theme="a" data-role="header">
+                <a data-role="button" href="#main" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    About Spocked!
+                </h3>
+            </div>
+            <div data-role="content">
+				<p>Rock, Paper, Scissors, Lizard, Spock!</p>
+				<p>A game inspired by "The Big Bang Theory", an american sitcom from Chuck Lorre Productions. It is distributed by Warner Bros Television and airs in the United States on the CBS network.</p>
+				<p>Application Author: Spyros Vris</p>
+			</div>
+        </div>	
+  </body>
+</html>
+
+<!-- TEMP DATA
+
+.ui-radio-on
+.ui-btn-text
+.ui-btn-inner ui
+
+-->

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script type="text/javascript">
+        // adding all script tags to the head
+        // in order to select the proper one
+        // based on the device
+        var head = document.getElementsByTagName('head')[0];
+        function AddScript(src) {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = src;
+            head.appendChild(script);
+        }
+        AddScript('./Scripts/crafty.js');
+        AddScript('./Scripts/myWebinos.js');
+        AddScript('./Scripts/ContestData.js');
+        AddScript('./Scripts/Settings.js');
+        AddScript('./Scripts/GameEngine.js');
+        // Add webinos as the very last one
+        // to catch the init event
+		// Some times the android wgt doesn't inject the files
+		// so we will load them ourselves.
+        var ua = navigator.userAgent;
+        // Pick the source depending on the device
+        if (ua.indexOf("Android") >= 0){ //Inject webinos on android
+			AddScript("./Scripts/webinos.js");
+		}
+        else // Else reference the local copy of webinos
+			AddScript("http://localhost:8080/client/webinos.js");
+    </script>
+    <title>Word Battle</title>
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        body {/*disables an annoying highlight on the element that your tapping on device*/
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        #cr-stage {/* Center the game area */
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        div {/* Fix the transparent background border bug*/
+            background-color: transparent !important;
+            border: none;
+        }
+    </style>
+</head>
+<body style="background-color: #808080;">
+</body>
+</html>

@@ -1,4 +1,4 @@
 webinos-appChallenge
 ====================
 
-webinos appChallenge winners, updated to run on the latest webinos platform
+webinos appChallenge winner applications, updated to run on the latest webinos platform.
