@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>Rock Paper Scissors Lizard Spock!</title>
 	<link rel="stylesheet" href="jQuery/flexslider/flexslider.css" type="text/css">
-    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <link rel="stylesheet" href="jQuery/jquery.mobile-1.2.0.min.css" />
+	<script src="jQuery/jquery.min.js"></script>
+	<script src="jQuery/jquery.mobile-1.2.0.min.js"></script>
 	<script src="jQuery/flexslider/jquery.flexslider.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		
@@ -402,7 +402,7 @@
 		
 		// create channel
 		function createChannel() {
-			var config = {namespace: channelNamespace, properties: {mode:"send-receive"}, appInfo: {}};
+			var config = {namespace: channelNamespace, properties: {mode:"send-receive", reclaimIfExists:true}, appInfo: {}};
 			webinosApp2App.createChannel(
                     config,
                     // callback invoked when a client want to connect to the channel
@@ -602,7 +602,7 @@
         function initWebinos() {
             if (window.WebSocket || window.MozWebSocket) {
                 console.log("==============================\nNative websocket found.\n==============================");
-                AddScript("./webinos.js", pageLaunch);
+                AddScript("/webinos.js", pageLaunch);
             }
             else {
                 if (typeof WebinosSocket == 'undefined') {
@@ -611,7 +611,7 @@
                 }
                 else {
                     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nWebinosSocket is defined!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    AddScript("./webinos.js", pageLaunch);
+                    AddScript("/webinos.js", pageLaunch);
                 }
             }
         }
