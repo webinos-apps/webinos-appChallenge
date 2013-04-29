@@ -22,12 +22,11 @@
     <script type="text/javascript">
         document.location.hash = "#pgHome";
 
-        if (navigator.userAgent.indexOf("Android")!=-1 || typeof webinos=="undefined"){
             var script = document.createElement( 'script' );
             script.type = 'text/javascript';
-            script.src = 'js/webinos.js';
+            script.src = '/webinos.js';
             $("head").append( script );
-        }
+
 
         var app = new whiteboard();
         $(document).one('pageinit', function () {
