@@ -18,17 +18,7 @@
         AddScript('./Scripts/ContestData.js');
         AddScript('./Scripts/Settings.js');
         AddScript('./Scripts/GameEngine.js');
-        // Add webinos as the very last one
-        // to catch the init event
-		// Some times the android wgt doesn't inject the files
-		// so we will load them ourselves.
-        var ua = navigator.userAgent;
-        // Pick the source depending on the device
-        if (ua.indexOf("Android") >= 0){ //Inject webinos on android
-			AddScript("./Scripts/webinos.js");
-		}
-        else // Else reference the local copy of webinos
-			AddScript("http://localhost:8080/client/webinos.js");
+		AddScript("/webinos.js");
     </script>
     <title>Word Battle</title>
     <style type="text/css">
