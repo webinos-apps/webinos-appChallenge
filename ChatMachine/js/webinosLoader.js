@@ -1,7 +1,7 @@
 function loadWebinosScript(){
     if(window.WebSocket || window.MozWebSocket)
     {
-        $.getScript("./js/webinos.js", initializeWebinos);
+        $.getScript("/webinos.js", initializeWebinos);
     }
     else
     {
@@ -11,7 +11,7 @@ function loadWebinosScript(){
         }
         else
         {
-            $.getScript("./js/webinos.js", initializeWebinos);
+            $.getScript("/webinos.js", initializeWebinos);
         }
     }
 };
