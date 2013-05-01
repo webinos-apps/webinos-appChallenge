@@ -10,7 +10,8 @@ Sample.prototype.play = function () {
     this.audio.play();
 };
 Sample.prototype.rewind = function () {
-    this.audio.currentTime = 0;
+    //Chrome needs to reload the audio file in order to play it again
+    this.audio.load();
 }
 Sample.prototype.stop = function () {
     this.audio.pause();

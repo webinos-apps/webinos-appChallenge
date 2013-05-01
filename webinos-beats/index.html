@@ -37,20 +37,19 @@
 <script type="text/javascript">
 $(function() {
 
-    kick = new Channel(new Sample("http://www.daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/bass/bass6_5.wav"));
+//    kick = new Channel(new Sample("http://www.daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/bass/bass6_5.wav"));
+//
+//    snare = new Channel(new Sample("http://www.daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/snare/rimsnare_12.wav"));
+//
+//    hat = new Channel(new Sample("http://daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/hihat/hihat_closed_1_5.wav"));
 
-    snare = new Channel(new Sample("http://www.daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/snare/rimsnare_12.wav"));
 
-    hat = new Channel(new Sample("http://daimi.au.dk/~pmn/spf02/CDROM/pr4/sound/amp300_16bit_mono/hihat/hihat_closed_1_5.wav"));
+    kick = new Channel(new Sample("samples/bass6_5.mp4"));
 
+    snare = new Channel(new Sample("samples/rimsnare_12.mp4"));
 
-/*
-    kick = new Channel(new Sample("samples/bass6_5.wav"));
+    hat = new Channel(new Sample("samples/hihat_closed_1_5.mp4"));
 
-    snare = new Channel(new Sample("samples/rimsnare_12.wav"));
-
-    hat = new Channel(new Sample("samples/hihat_closed_1_5.wav"));
-*/
 
 
     song = new Song();
