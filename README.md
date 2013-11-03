@@ -10,7 +10,7 @@ webinos requirements
 
 You will need to install the following APIs. Inside your webinos-pzp folder post the following commands:
 
-* npm install git+https://github.com/webinos/webinos-api-events (ChatMachine,tiledimage,tiledmaps,WebinosPoker,webinos-beats,Whiteboard,WordBattle)
+* npm install git+https://github.com/webinos/webinos-api-events (ChatMachine,tiledimage,tiledmaps,WebinosPoker,webinosProjector,webinos-beats,Whiteboard,WordBattle)
 * npm install git+https://github.com/webinos/webinos-api-geolocation (CollabMaps)
 * npm install git+https://github.com/webinos/webinos-api-app2app (CollabMaps, Spocked)
 * npm install git+https://github.com/webinos/webinos-api-file (webinosProjector)
