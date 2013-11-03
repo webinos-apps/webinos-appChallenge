@@ -45,14 +45,14 @@ var WebinosInjector = WebinosInjector || (function () {
     return {
 		inject : function (callback) {
             if(window.WebSocket || window.MozWebSocket) {
-                addScript("http://localhost:8080/webinos.js", callback);
+                addScript("/webinos.js", callback);
             } else {
                 if(typeof WebinosSocket == 'undefined') {
                     setTimeout(function() {
                         inject(callback);
                     }, 1);
                 } else {
-                    addScript("http://localhost:8080/webinos.js", callback);
+                    addScript("/webinos.js", callback);
                 }
             }
 		},

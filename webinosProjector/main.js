@@ -432,7 +432,7 @@ function initializeWebinos(){
 function loadWebinosScript(){
     if(window.WebSocket || window.MozWebSocket)
     {
-        $.getScript("./webinos.js", initializeWebinos);
+        $.getScript("/webinos.js", initializeWebinos);
     }
     else
     {
@@ -442,7 +442,7 @@ function loadWebinosScript(){
         }
         else
         {
-            $.getScript("./webinos.js", initializeWebinos);
+            $.getScript("/webinos.js", initializeWebinos);
         }
     }
 };
