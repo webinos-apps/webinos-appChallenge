@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="app-challenge-winners" default="make-all" basedir="./">
+        <target name="gen-wgt" depends="clean">
+                <!-- Creates the widget -->
+                <zip destfile="${basedir}/${app}.wgt">
+                        <zipfileset dir="${basedir}/${app}/" 
+                        excludes="
+                                **/.gitignore
+                                **/*.iml
+								**/Readme.md
+								**/*.psd" />
+                </zip>
+        </target>
+
+        <target name="clean">
+            <!-- Removes precompiled widget -->
+            <delete quiet="true" file="${basedir}/${app}.wgt" />
+        </target>
+		
+		<target name="ChatMachine">
+			<antcall target="gen-wgt">
+				<param name="app" value="ChatMachine"/>
+			</antcall>
+		</target>
+		<target name="CollabMaps">
+			<antcall target="gen-wgt">
+				<param name="app" value="CollabMaps"/>
+			</antcall>
+		</target>
+		<target name="Spocked">
+			<antcall target="gen-wgt">
+				<param name="app" value="Spocked"/>
+			</antcall>
+		</target>
+		<target name="webinos-beats">
+			<antcall target="gen-wgt">
+				<param name="app" value="webinos-beats"/>
+			</antcall>
+		</target>
+		<target name="WebinosPoker">
+			<antcall target="gen-wgt">
+				<param name="app" value="WebinosPoker"/>
+			</antcall>
+		</target>
+		<target name="webinosProjector">
+			<antcall target="gen-wgt">
+				<param name="app" value="webinosProjector"/>
+			</antcall>
+		</target>
+		<target name="Whiteboard">
+			<antcall target="gen-wgt">
+				<param name="app" value="Whiteboard"/>
+			</antcall>
+		</target>
+		<target name="WordBattle">
+			<antcall target="gen-wgt">
+				<param name="app" value="WordBattle"/>
+			</antcall>
+		</target>
+		<target name="tiledViewer">
+			<antcall target="gen-wgt">
+				<param name="app" value="tiledViewer/tiledimage"/>
+			</antcall>
+			<move file="${basedir}/tiledViewer/tiledimage.wgt" tofile="${basedir}/tiledimage.wgt"/>
+			<antcall target="gen-wgt">
+				<param name="app" value="tiledViewer/tiledmaps"/>
+			</antcall>
+			<move file="${basedir}/tiledViewer/tiledmaps.wgt" tofile="${basedir}/tiledmaps.wgt"/>
+		</target>
+        
+        <target name="make-all">
+            <antcall target="ChatMachine" />
+            <antcall target="CollabMaps" />
+            <antcall target="Spocked" />
+            <antcall target="tiledViewer" />
+            <antcall target="webinos-beats" />
+            <antcall target="WebinosPoker" />
+            <antcall target="webinosProjector" />
+            <antcall target="Whiteboard" />
+            <antcall target="WordBattle" />
+        </target>
+        
+</project>
