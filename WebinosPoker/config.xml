@@ -17,5 +17,5 @@
 
   <icon src="game_station.png" />
 
-  <content type="text/html" src="main.html"/>
+  <content type="text/html" src="index.html"/>
 </widget>
