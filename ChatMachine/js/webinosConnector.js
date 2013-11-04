@@ -200,14 +200,12 @@ webinosConnector = function (applicationName) {
     webinos.session.addListener('registeredBrowser', function (data) {
 //        setState(that.STATE.CONNECTED_PZP);
         connectedDevices.myPzp = data.from;
-        if (data.payload.message.connectedPzh.length == 0){
+        if (!data.payload.message.enrolled){
             connectorServices.events = null;
-            if (/(\D+?)\/(\D+)/.test(data.from)){
-                setState(that.STATE.PZH_OFFLINE);
-            }else{
-                setState(that.STATE.VIRGIN);
-            }
-//        }else if (that.getState() != that.STATE.PZH_ONLINE){
+            setState(that.STATE.VIRGIN);
+        }else if (data.payload.message.state.pzh !== "connected"){
+            connectorServices.events = null;
+            setState(that.STATE.PZH_OFFLINE);
         }else {
             findEventsAPI();
         }
