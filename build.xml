@@ -8,7 +8,8 @@
                                 **/.gitignore
                                 **/*.iml
 								**/Readme.md
-								**/*.psd" />
+								**/*.psd
+								**/*.bak" />
                 </zip>
         </target>
 
