@@ -15,7 +15,7 @@ myWebinos = {
                 //we notify the game that we have connected to the pzp
                 Crafty.trigger(myWebinos.Events.Ready, null);
             }
-            if (data.payload.message.connectedPzh.length == 0) {
+            if (!data.payload.message.enrolled || data.payload.message.state.Pzh !== "connected") {
                 //There is no PZH
                 myWebinos.handleNoPZH(data.from);
             } else {
