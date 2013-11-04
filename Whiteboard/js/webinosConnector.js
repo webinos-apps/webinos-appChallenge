@@ -203,7 +203,7 @@ webinosConnector = function (applicationName) {
         if (!data.payload.message.enrolled){
             connectorServices.events = null;
             setState(that.STATE.VIRGIN);
-        }else if (data.payload.message.state.pzh !== "connected"){
+        }else if (data.payload.message.state.Pzh !== "connected"){
             connectorServices.events = null;
             setState(that.STATE.PZH_OFFLINE);
         }else {
