@@ -40,8 +40,8 @@ StreetViewer.init = function(hostorguest, callback, channelid) {
         });
 
         var mapOptions = {
-            zoom: 15,
-            center: new google.maps.LatLng(0.0, 0.0),
+            zoom: 5,
+            center: new google.maps.LatLng(51.76433407736961, 4.958202838897705),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map($("#map_canvas")[0], mapOptions);
